@@ -1,0 +1,36 @@
+<nav>
+    <div class="nav-wrapper">
+        <ul class="left">
+            <li>
+                <a href="/">Home</a>
+            </li>
+            <li>
+                <a href="/saved">Saved Articles</a>
+            </li>
+        </ul>
+        <ul class="left">
+            <li>
+              
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="col m12">
+
+
+    {{#if article}} {{#each article}}
+    <h2 class="header">{{this.title}}</h2>
+
+    <div class="card horizontal">
+        <div class="card-stacked">
+            <div class="card-content">
+                <p> {{this.summary}}</p>
+                <a href={{this.link}} target="_blank">{{this.link}}</a>
+            </div>
+        </div>
+    </div>
+    {{/each}} {{else}}
+    <h3>No saved articles!</h3>
+    {{/if}}
+</div>

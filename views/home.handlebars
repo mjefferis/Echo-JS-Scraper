@@ -1,0 +1,83 @@
+<nav>
+    <div class="nav-wrapper">
+        <ul class="left">
+            <li>
+                <a href="/">Home</a>
+            </li>
+            <li>
+                <a href="/saved">Saved Articles</a>
+            </li>
+        </ul>
+        <ul class="left">
+            <li>
+                <a class="waves-effect waves-light btn" id="scrape">Scrape New Articles</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+
+<div class="container">
+
+
+    <h1>Mongo Scraper</h1>
+    <h3>Scrape the latest Echo JS articles!</h3>
+
+    <div class="col m12">
+
+        <a class="waves-effect waves-light btn modal-trigger right">Save Article</a>
+        <a class="waves-effect waves-light btn modal-trigger right">Remove Article</a>
+        <h2 class="header">Card header</h2>
+
+        <div class="card horizontal">
+            <div class="card-stacked">
+                <div class="card-content">
+                    <p> card text </p>
+                    <a>card link</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col m12">
+        {{#if article}} {{#each article}}
+        <a class="waves-effect waves-light btn modal-trigger right" id="save" data-id={{this._id}} href="#modal1">Save Article</a>
+        <a class="waves-effect waves-light btn modal-trigger right" id="delete" data-id={{this._id}}>Remove Article</a>
+        <h2 class="header">{{this.title}}</h2>
+
+        <div class="card horizontal">
+            <div class="card-stacked">
+                <div class="card-content">
+                    <p> {{this.summary}}</p>
+                    <a href={{this.link}} target="_blank">{{this.link}}</a>
+                </div>
+            </div>
+        </div>
+        {{/each}} {{else}}
+        <h4>No articles scraped!</h4>
+        {{/if}}
+    </div>
+    <!--close container-->
+</div>
+
+
+<div id="modal1" class="modal">
+
+    <div class="modal-content">
+        <h4>You added a new articles</h4>
+    </div>
+
+</div>
+</div>
+
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('.modal').modal();
+    })
+
+</script>
