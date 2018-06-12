@@ -16,7 +16,7 @@ var app = express();
 // Require all models
 var db = require("./models");
 
-var PORT = process.env.PORT || 3000;
+var port = process.env.PORT || 3000;
 
 // Use morgan logger for logging requests
 app.use(logger("dev"));
