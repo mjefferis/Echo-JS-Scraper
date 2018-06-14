@@ -87,12 +87,23 @@ app.get("/scrape", function (req, res) {
 
     //Displays saved page
     app.get("/saved", function (req, res) {
-      db.Article.find({ "saved": true }).populate("notes").exec(function (error, articles) {
-        var hbsObject = {
-          article: articles
-        };
-        res.render("saved", hbsObject);
-      });
+      // Grab every document in the Articles collection
+      db.Article.find({ "saved": true })
+        .then(function (dbArticle) {
+          //Create handlebars object to help render every saved article on the homepage
+          var hbsObject = {
+            article: dbArticle
+          };
+          //Send back saved articles to the client
+          res.json(dbArticle);
+          //render home page
+          res.render("home", hbsObject);
+
+        })
+        .catch(function (err) {
+          // If an error occurred, send it to the client
+          res.json(err);
+        });
     });
 
     // Save an article
@@ -117,14 +128,14 @@ app.get("/scrape", function (req, res) {
       // Use the article id to find and update its saved boolean
       db.Article.findOneAndUpdate({ "_id": req.params.id }, { "saved": false })
         // Execute the above query
-        .exec(function (err, doc) {
+        .then(function (dbArticle) {
           // Log any errors
           if (err) {
             console.log(err);
           }
           else {
             // Or send the document to the browser
-            res.send(doc);
+            res.send(dbArticle);
           }
         });
     });
