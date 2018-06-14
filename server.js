@@ -1,8 +1,8 @@
+// Setting up dependencies
 var express = require("express");
 var bodyParser = require("body-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
-// Set Handlebars.
 var exphbs = require("express-handlebars");
 // Our scraping tools
 // Axios is a promised-based http library, similar to jQuery's Ajax method
@@ -33,19 +33,31 @@ app.engine("handlebars", exphbs({
 }));
 app.set("view engine", "handlebars");
 
-
-// Route for getting all Articles from the db
-app.get("/articles", function(req, res) {
-  // Grab every document in the Articles collection
-  db.Article.find({})
+//Route displaying home page with all unsaved scraped artiles
+app.get("/", function(req, res) {   
+    //Create handlebars object to help render every unsaved article on the homepage
+    var hbsObject = {
+    article: data
+    };
+    // Grab every document in the Articles collection
+    db.Article.find({"saved": false})
     .then(function(dbArticle) {
-      // If we were able to successfully find Articles, send them back to the client
+      //Send back unsaved articles to the client
       res.json(dbArticle);
+     
     })
     .catch(function(err) {
       // If an error occurred, send it to the client
       res.json(err);
     });
+    //render home page
+    res.render("home", hbsObject);
+
+});
+
+//Displays saved page
+app.get("/saved", function(req, res) {   
+  res.render("saved");
 });
 
 
@@ -54,3 +66,4 @@ app.get("/articles", function(req, res) {
 app.listen(port, function() {
   console.log("App running on port " + port);
 });
+
