@@ -45,7 +45,7 @@ app.get("/", function (req, res) {
         article: dbArticle
       };
       //Send back unsaved articles to the client
-      res.json(dbArticle);
+      //res.json(dbArticle);
       //render home page
       res.render("home", hbsObject);
 
