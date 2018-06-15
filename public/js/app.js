@@ -15,7 +15,8 @@ $("#save").on("click", function () {
         url: "/save/" + thisId
     }).done(function (data) {
         console.log(data)
-    });
+    })
+});
 
     //Handle Delete Article button
     $("#delete").on("click", function () {
