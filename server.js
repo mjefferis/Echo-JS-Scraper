@@ -41,13 +41,13 @@ app.get("/", function (req, res) {
       // View the added result in the console
       console.log(dbArticle);
       //Create handlebars object to help render every unsaved article on the homepage
-      //var hbsObject = {
-        //article: dbArticle
-      //};
+      var hbsObject = {
+        article: dbArticle
+      };
       //Send back unsaved articles to the client
       res.json(dbArticle);
       //render home page
-      res.render("home", dbArticle);
+      res.render("home", hbsObject);
 
     })
     .catch(function (err) {
