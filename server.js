@@ -85,64 +85,66 @@ app.get("/scrape", function (req, res) {
           return res.json(err);
         });
     });
+  });
+});
 
 
-    //Displays saved page
-    app.get("/saved", function (req, res) {
-      // Grab every document in the Articles collection
-      db.Article.find({ "saved": true })
-        .then(function (dbArticle) {
-          //Create handlebars object to help render every saved article on the homepage
-          var hbsObject = {
-            article: dbArticle
-          };
-          //Send back saved articles to the client
-          res.json(dbArticle);
-          //render home page
-          res.render("home", hbsObject);
+//Displays saved page
+app.get("/saved", function (req, res) {
+  // Grab every document in the Articles collection
+  db.Article.find({ "saved": true })
+    .then(function (dbArticle) {
+      //Create handlebars object to help render every saved article on the homepage
+      var hbsObject = {
+        article: dbArticle
+      };
+      //Send back saved articles to the client
+      res.json(dbArticle);
+      //render home page
+      res.render("home", hbsObject);
 
-        })
-        .catch(function (err) {
-          // If an error occurred, send it to the client
-          res.json(err);
-        });
+    })
+    .catch(function (err) {
+      // If an error occurred, send it to the client
+      res.json(err);
     });
+});
 
-    // Save an article
-    app.post("/save/:id", function (req, res) {
-      // Use the article id to find and update its saved boolean
-      db.Article.findOneAndUpdate({ "_id": req.params.id }, { "saved": true })
-        // Execute the above query
-        .then(function (dbArticle) {
-          // Log any errors
-          if (err) {
-            console.log(err);
-          }
-          else {
-            // Or send the document to the browser
-            res.send(doc);
-          }
-        });
+// Save an article
+app.post("/save/:id", function (req, res) {
+  // Use the article id to find and update its saved boolean
+  db.Article.findOneAndUpdate({ "_id": req.params.id }, { "saved": true })
+    // Execute the above query
+    .then(function (dbArticle) {
+      // Log any errors
+      if (err) {
+        console.log(err);
+      }
+      else {
+        // Or send the document to the browser
+        res.send(doc);
+      }
     });
+});
 
-    // Delete an article
-    app.post("/delete/:id", function (req, res) {
-      // Use the article id to find and update its saved boolean
-      db.Article.findOneAndUpdate({ "_id": req.params.id }, { "saved": false })
-        // Execute the above query
-        .then(function (dbArticle) {
-          // Log any errors
-          if (err) {
-            console.log(err);
-          }
-          else {
-            // Or send the document to the browser
-            res.send(dbArticle);
-          }
-        });
+// Delete an article
+app.post("/delete/:id", function (req, res) {
+  // Use the article id to find and update its saved boolean
+  db.Article.findOneAndUpdate({ "_id": req.params.id }, { "saved": false })
+    // Execute the above query
+    .then(function (dbArticle) {
+      // Log any errors
+      if (err) {
+        console.log(err);
+      }
+      else {
+        // Or send the document to the browser
+        res.send(dbArticle);
+      }
     });
+});
 
-    // Listen on port
-    app.listen(port, function () {
-      console.log("App running on port " + port);
-    }); 
+// Listen on port
+app.listen(port, function () {
+  console.log("App running on port " + port);
+}); 
