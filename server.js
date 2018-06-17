@@ -45,14 +45,10 @@ app.get("/", function (req, res) {
     .then(function (dbArticle) {
       // View the added result in the console
       console.log(dbArticle);
-      //Create handlebars object to help render every unsaved article on the homepage
-      var hbsObject = {
-        article: dbArticle
-      };
       //Send back unsaved articles to the client
       //res.json(dbArticle);
       //render home page
-      res.render("home", hbsObject);
+      res.render("home", abArticle);
 
     })
     .catch(function (err) {
@@ -99,14 +95,10 @@ app.get("/saved", function (req, res) {
   // Grab every document in the Articles collection
   db.Article.find({ "saved": true })
     .then(function (dbArticle) {
-      //Create handlebars object to help render every saved article on the homepage
-      var hbsObject = {
-        article: dbArticle
-      };
       //Send back saved articles to the client
       res.json(dbArticle);
       //render home page
-      res.render("home", hbsObject);
+      res.render("home", dbArticle);
 
     })
     .catch(function (err) {
